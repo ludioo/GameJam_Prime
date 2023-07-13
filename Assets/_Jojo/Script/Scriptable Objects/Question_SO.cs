@@ -6,4 +6,5 @@ using UnityEngine;
 public class Question_SO : ScriptableObject
 {
     public string questionText;
+    public int questionNumber;
 }
