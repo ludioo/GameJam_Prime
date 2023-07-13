@@ -16,7 +16,7 @@ namespace PrimeExpress
         [SerializeField] private string[] mainButtonText;
         [SerializeField] private string[] contentTitle;
         [SerializeField] private string[] contentText;
-        [SerializeField] private Image[] contentImage;
+        [SerializeField] private Sprite[] contentImage;
 
         private void Awake()
         {

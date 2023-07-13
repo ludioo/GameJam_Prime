@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 822b7915986441b40a522d323e7d61fc, type: 3}
+  m_Name: Person 1
+  m_EditorClassIdentifier: 
+  personName: Person1
+  personImage: {fileID: 21300000, guid: 109a7446c0abf4e43b3665c676600f4e, type: 3}
+  personDescription: Contoh Deskripsi Person 1
+  questions:
+  - Oh yeah how is she? Haven't heard from her since my high school reunion
+  - Is she still having a hard time with her new boss?
+  - Whoa relax man, what the hell is your problem?
+  - Now it's no longer 2 options Science and Social studies. I also don't really
+    quite get it, her homeroom teacher also didn't understand fully so he referred
+    me to the school administration, but when I asked them they referred me back
+    to ask the homeroom teacher. Does anyone at the school even understand?
+  - She sort of gave up trying and it's all on me now to make sure she doesn't make
+    the wrong decision.
+  responses:
+  - 7 o'clock, I need to take my sister to her school first so I always clock-in
+    early
+  - After clocking in I went back to my car to sleep until 8 o'clock
+  - I only stayed home helping my sister's school project, I was actually planning
+    on hanging out with my friends but had to cancel
+  - She's hanging in there I suppose, there are a lot of weird new rules regarding
+    her academics
+  haveMentalHealth: 0

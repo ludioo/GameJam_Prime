@@ -25,6 +25,7 @@ public class C_InformationPrompt : MonoBehaviour
     }
 
     [SerializeField] private GameObject defaultPanel;
+    [SerializeField] private MainCanvasUI mainCanvasUI;
 
     public Button closeButton;
     [SerializeField] private AudioSource buttonSFX;
@@ -45,11 +46,12 @@ public class C_InformationPrompt : MonoBehaviour
         closeButton.onClick.AddListener(() =>
         {
             buttonSFX.Play();
-            closing = true;
+            StartCoroutine(Terminate());
+            StartCoroutine(ActivateMainCanvas(4f));
         });
     }
 
-    public virtual void Initiate(string _promptTitle, string[] mainButtonText, string[] contentTitle, Image[] contentImage, string[] contentText)
+    public virtual void Initiate(string _promptTitle, string[] mainButtonText, string[] contentTitle, Sprite[] contentImage, string[] contentText)
     {
         foreach (Contents panel in contentList)
         {
@@ -69,7 +71,7 @@ public class C_InformationPrompt : MonoBehaviour
             contentList[i].contentTitle.text = contentTitle[i];
             contentList[i].contentText.text = contentText[i];
 
-            contentList[i].contentImage = contentImage[i];
+            contentList[i].contentImage.sprite = contentImage[i];
 
             int j = i-1;
 
@@ -104,9 +106,19 @@ public class C_InformationPrompt : MonoBehaviour
         gameObject.SetActive(true);
     }
     
-    public void Terminate()
+    public IEnumerator Terminate()
     {
         closing = false;
         animator.SetTrigger("Hide");
+
+        yield return new WaitForSeconds(5f);
+
+        gameObject.SetActive(false);
+    }
+
+    public IEnumerator ActivateMainCanvas(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        mainCanvasUI.gameObject.SetActive(true);
     }
 }
