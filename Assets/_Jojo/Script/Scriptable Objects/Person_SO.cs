@@ -11,8 +11,15 @@ public class Person_SO : ScriptableObject
     [TextArea]
     public string personDescription;
 
+    [System.Serializable]
+    public class PersonResponse
+    {
+        public string response;
+        public bool isBluffing;
+    }
+
     [Space]
-    public List<string> question;
-    public List<string> response;
+    public List<string> questions;
+    public List<string> responses;
     public bool haveMentalHealth;
 }

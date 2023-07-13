@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainCanvasUI : MonoBehaviour
 {
-    [SerializeField] private GameObject hintPanelUI;
-    [SerializeField] private GameObject notePanelUI;
+    [SerializeField] private Button hintPanelUI;
+    [SerializeField] private Button notePanelUI;
 
-    [SerializeField] private GameObject mainCanvas;
-
-    public void OpenNote()
+    private void Awake()
     {
-        mainCanvas.SetActive(false);
+        notePanelUI.onClick.AddListener(() =>
+        {
+            Initiator.Instance.InitiateInformationPrompt();
+            gameObject.SetActive(false);
+        });
     }
 }
