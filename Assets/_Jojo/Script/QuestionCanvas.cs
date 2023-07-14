@@ -29,28 +29,69 @@ public class QuestionCanvas : MonoBehaviour
                     case MainCanvasUI.PersonChosen.First:
                         GameplayManager.Instance.SetString(aQuestionSequence[_index].name);
                         QuestionManager.Instance.RemoveQuestionsFromList(aQuestionSequence, _index);
+
+
+                        index = _index;
                         break;
                     case MainCanvasUI.PersonChosen.Second:
                         GameplayManager.Instance.SetString(bQuestionSequence[_index].name);
                         QuestionManager.Instance.RemoveQuestionsFromList(bQuestionSequence, _index);
+
+
+                        index = _index;
                         break;
                     case MainCanvasUI.PersonChosen.Third:
                         GameplayManager.Instance.SetString(cQuestionSequence[_index].name);
                         QuestionManager.Instance.RemoveQuestionsFromList(cQuestionSequence, _index);
+
+
+                        index = _index;
                         break;
                 }
-
-                index = _index;
             });
         }
     }
 
     public IEnumerator InitializeQuestionCanvas()
-    {
-        if (QuestionManager.Instance.totalQuestionList.Count == 0)
+    { 
+        switch (mainCanvasUI.GetPersonChosen())
         {
-            questionButtonList[index].gameObject.SetActive(false);
-            QuestionManager.Instance._RemoveQuestionsFromList(questionButtonList, index);
+            case MainCanvasUI.PersonChosen.First:
+                if (QuestionManager.Instance.aTotalQuestionList.Count == 0)
+                {
+                    QuestionManager.Instance._RemoveQuestionsFromList(questionButtonList, index);
+                    questionButtonList[index].gameObject.SetActive(false);
+
+                    for (int i = 0; i < QuestionManager.Instance.aTotalQuestionList.Count; i++)
+                    {
+                        questionButtonList[i].gameObject.SetActive(true);
+                    }
+                }
+                break;
+            case MainCanvasUI.PersonChosen.Second:
+                if (QuestionManager.Instance.bTotalQuestionList.Count == 0)
+                {
+                    QuestionManager.Instance._RemoveQuestionsFromList(questionButtonList, index);
+                    questionButtonList[index].gameObject.SetActive(false);
+
+                    for (int i = 0; i < QuestionManager.Instance.bTotalQuestionList.Count; i++)
+                    {
+                        questionButtonList[i].gameObject.SetActive(true);
+                    }
+                }
+                break;
+            case MainCanvasUI.PersonChosen.Third:
+                if (QuestionManager.Instance.cTotalQuestionList.Count == 0)
+                {
+                    QuestionManager.Instance._RemoveQuestionsFromList(questionButtonList, index);
+                    questionButtonList[index].gameObject.SetActive(false);
+
+                    for (int i = 0; i < QuestionManager.Instance.cTotalQuestionList.Count; i++)
+                    {
+                        questionButtonList[i].gameObject.SetActive(true);
+                    }
+                }
+                break;
         }
 
         if (aQuestionSequence.Count == 0)
@@ -108,7 +149,7 @@ public class QuestionCanvas : MonoBehaviour
             }
         }
 
-        if (aQuestionSequence.Count < 3 && aQuestionSequence.Count != 0)
+        if (aQuestionSequence.Count < 3 && aQuestionSequence.Count != 0 && QuestionManager.Instance.aTotalQuestionList.Count != 0)
         {
             Question_SO Aquestion_SO = QuestionManager.Instance.aTotalQuestionList[0];
             QuestionManager.Instance.AddQuestionToList(aQuestionSequence, Aquestion_SO);
@@ -119,7 +160,7 @@ public class QuestionCanvas : MonoBehaviour
                 questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = aQuestionSequence[i].questionText;
             }
         }
-        else if (bQuestionSequence.Count < 3 && bQuestionSequence.Count != 0)
+        else if (bQuestionSequence.Count < 3 && bQuestionSequence.Count != 0 && QuestionManager.Instance.bTotalQuestionList.Count != 0)
         {
             Question_SO Bquestion_SO = QuestionManager.Instance.bTotalQuestionList[0];
             QuestionManager.Instance.AddQuestionToList(bQuestionSequence, Bquestion_SO);
@@ -130,7 +171,7 @@ public class QuestionCanvas : MonoBehaviour
                 questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = bQuestionSequence[i].questionText;
             }
         }
-        else if (cQuestionSequence.Count < 3 && cQuestionSequence.Count != 0)
+        else if (cQuestionSequence.Count < 3 && cQuestionSequence.Count != 0 && QuestionManager.Instance.cTotalQuestionList.Count != 0)
         {
             Question_SO Cquestion_SO = QuestionManager.Instance.cTotalQuestionList[0];
             QuestionManager.Instance.AddQuestionToList(cQuestionSequence, Cquestion_SO);
