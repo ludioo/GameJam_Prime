@@ -8,10 +8,17 @@ public class QuestionManager : MonoBehaviour
     public static QuestionManager Instance { get; private set; }
 
     public List<Question_SO> totalQuestionList;
+    public List<Question_SO> aTotalQuestionList;
+    public List<Question_SO> bTotalQuestionList;
+    public List<Question_SO> cTotalQuestionList;
 
     private void Awake()
     {
         Instance = this;
+
+        aTotalQuestionList = new List<Question_SO>(totalQuestionList);
+        bTotalQuestionList = new List<Question_SO>(totalQuestionList);
+        cTotalQuestionList = new List<Question_SO>(totalQuestionList);
     }
 
     public void RemoveQuestionsFromList(List<Question_SO> questionList, int index)

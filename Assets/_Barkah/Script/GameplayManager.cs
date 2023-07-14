@@ -10,6 +10,7 @@ public class GameplayManager : MonoBehaviour
     {
         Idle,
         Convo,
+        Choosing
     }
 
     public State NowState;
@@ -49,6 +50,15 @@ public class GameplayManager : MonoBehaviour
     public int dialogueChosen = 0;
 
     private bool isConvoing;
+    public bool choosingState;
+    public bool A;
+    public bool B;
+    public bool C;
+
+    public Sprite normal;
+    public Sprite selected;
+
+    public MainCanvasUI mainCanvasUI;
 
     private void Awake()
     {
@@ -128,6 +138,22 @@ public class GameplayManager : MonoBehaviour
                 }
                 LeanTween.alphaCanvas(cg, 1, 0.5f);
             }
+        }
+    }
+
+    public void ChangeState()
+    {
+        if (!choosingState)
+        {
+            NowState = State.Choosing;
+            allButtons[2].GetComponent<Image>().sprite = selected;
+            choosingState = true;
+        }
+        else
+        {
+            NowState = State.Idle;
+            allButtons[2].GetComponent<Image>().sprite = normal;
+            choosingState = false;
         }
     }
 
@@ -216,7 +242,7 @@ public class GameplayManager : MonoBehaviour
                 spotlights[index].SetActive(true);
                 SFXManager.Instance.PlaySpotlight();
                 NowState = State.Convo;
-
+                mainCanvasUI.ChangeState(index);
                 isConvoing = true;
 
                 break;
@@ -245,12 +271,64 @@ public class GameplayManager : MonoBehaviour
 
                 }
                 break;
+
+            case State.Choosing:
+                animator_black.SetTrigger("On");
+                yield return new WaitForSeconds(animation_black.length);
+                foreach (GameObject item in allButtons)
+                    item.SetActive(false);
+
+                for (int i = 0; i < onGameplayNPC.Count; i++)
+                {
+                    if (index != i)
+                    {
+                        onGameplayNPC[i].GetComponent<Button>().interactable = false;
+                        nameText[i].SetActive(false);
+                    }
+
+                }
+
+                spotlights[index].SetActive(true);
+                switch(index)
+                {
+                    case 0:
+                        A = true;
+                        break;
+                    case 1:
+                        B = true;
+                        break;
+                    case 2:
+                        C = true;
+                        break;
+                }
+                SFXManager.Instance.PlaySpotlight();
+                mainCanvasUI.confirmationUI.gameObject.SetActive(true);
+                break;
         }
     }
 
     public void ChooseSuspect(int index)
     {
         StartCoroutine(IE_ChooseSuspect(index));
+    }
+
+    public void ResetUI()
+    {
+        NowState = State.Convo;
+        ChooseSuspect(GetSpotlightCount());
+        allButtons[2].GetComponent<Image>().sprite = normal;
+
+        A = false;
+        B = false;
+        C = false;
+
+        choosingState = false;
+    }
+
+    public void Submit()
+    {
+        SetString("ending");
+        flow.gameObject.SetActive(true);
     }
 
     public void NPCNotes(int index)

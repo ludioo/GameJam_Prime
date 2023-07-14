@@ -9,7 +9,13 @@ public class QuestionCanvas : MonoBehaviour
     [SerializeField] private List<Button> questionButtonList;
     [SerializeField] private List<Question_SO> questionSequence;
 
+    [SerializeField] private List<Question_SO> aQuestionSequence;
+    [SerializeField] private List<Question_SO> bQuestionSequence;
+    [SerializeField] private List<Question_SO> cQuestionSequence;
+
     private int index;
+
+    public MainCanvasUI mainCanvasUI;
 
     private void Awake()
     {
@@ -19,13 +25,23 @@ public class QuestionCanvas : MonoBehaviour
             questionButtonList[_index].onClick.AddListener(() =>
             {
                 GameplayManager.Instance.SetString(questionSequence[_index].name);
-                QuestionManager.Instance.RemoveQuestionsFromList(questionSequence, _index);
+
+                switch (mainCanvasUI.GetPersonChosen())
+                {
+                    case MainCanvasUI.PersonChosen.First:
+                        QuestionManager.Instance.RemoveQuestionsFromList(aQuestionSequence, _index);
+                        break;
+                    case MainCanvasUI.PersonChosen.Second:
+                        QuestionManager.Instance.RemoveQuestionsFromList(bQuestionSequence, _index);
+                        break;
+                    case MainCanvasUI.PersonChosen.Third:
+                        QuestionManager.Instance.RemoveQuestionsFromList(cQuestionSequence, _index);
+                        break;
+                }
 
                 index = _index;
             });
         }
-
-        gameObject.SetActive(false);
     }
 
     public IEnumerator InitializeQuestionCanvas()
@@ -36,7 +52,7 @@ public class QuestionCanvas : MonoBehaviour
             QuestionManager.Instance._RemoveQuestionsFromList(questionButtonList, index);
         }
 
-        if (questionSequence.Count == 0)
+        if (questionSequence.Count == 0 && aQuestionSequence.Count == 0 && bQuestionSequence.Count == 0 && cQuestionSequence.Count == 0)
         {
             for (int i = 0; i < 3; i++)
             {
@@ -46,6 +62,18 @@ public class QuestionCanvas : MonoBehaviour
                     QuestionManager.Instance.AddQuestionToList(questionSequence, question_SO);
                     QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.totalQuestionList, 0);
 
+                    Question_SO Aquestion_SO = QuestionManager.Instance.totalQuestionList[0];
+                    QuestionManager.Instance.AddQuestionToList(aQuestionSequence, Aquestion_SO);
+                    QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.aTotalQuestionList, 0);
+
+                    Question_SO Bquestion_SO = QuestionManager.Instance.totalQuestionList[0];
+                    QuestionManager.Instance.AddQuestionToList(bQuestionSequence, Bquestion_SO);
+                    QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.bTotalQuestionList, 0);
+
+                    Question_SO Cquestion_SO = QuestionManager.Instance.totalQuestionList[0];
+                    QuestionManager.Instance.AddQuestionToList(cQuestionSequence, Cquestion_SO);
+                    QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.cTotalQuestionList, 0);
+
                     questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = questionSequence[i].questionText;
                 }
                 else
@@ -54,16 +82,36 @@ public class QuestionCanvas : MonoBehaviour
                 }
             }
         }
-        else if (questionSequence.Count < 3)
+        else if (aQuestionSequence.Count < 3)
         {
-            if (QuestionManager.Instance.totalQuestionList.Count != 0)
+            if (QuestionManager.Instance.aTotalQuestionList.Count != 0)
             {
-                QuestionManager.Instance.AddQuestionToList(questionSequence, QuestionManager.Instance.totalQuestionList[0]);
-                QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.totalQuestionList, 0);
+                QuestionManager.Instance.AddQuestionToList(aQuestionSequence, QuestionManager.Instance.aTotalQuestionList[0]);
+                QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.aTotalQuestionList, 0);
 
                 for (int i = 0; i < 3; i++)
                 {
-                    questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = questionSequence[i].questionText;
+                    questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = aQuestionSequence[i].questionText;
+                }
+            }
+            else if (QuestionManager.Instance.bTotalQuestionList.Count != 0)
+            {
+                QuestionManager.Instance.AddQuestionToList(bQuestionSequence, QuestionManager.Instance.bTotalQuestionList[0]);
+                QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.bTotalQuestionList, 0);
+
+                for (int i = 0; i < 3; i++)
+                {
+                    questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = bQuestionSequence[i].questionText;
+                }
+            }
+            else if (QuestionManager.Instance.cTotalQuestionList.Count != 0)
+            {
+                QuestionManager.Instance.AddQuestionToList(cQuestionSequence, QuestionManager.Instance.cTotalQuestionList[0]);
+                QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.cTotalQuestionList, 0);
+
+                for (int i = 0; i < 3; i++)
+                {
+                    questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = cQuestionSequence[i].questionText;
                 }
             }
         }
@@ -73,31 +121,5 @@ public class QuestionCanvas : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         gameObject.SetActive(true);
-    }
-
-    public void BubbleSort()
-    {
-        bool swapped;
-
-        for (int i = 0; i < questionSequence.Count - 1; i++)
-        {
-            swapped = false;
-
-            for (int j = 0; j < questionSequence.Count - i - 1; j++)
-            {
-                if (questionSequence[j].questionNumber > questionSequence[j + 1].questionNumber)
-                {
-                    Question_SO temp = questionSequence[j];
-                    questionSequence[j] = questionSequence[j + 1];
-                    questionSequence[j + 1] = temp;
-                    swapped = true;
-                }
-            }
-
-            if (!swapped)
-            {
-                break;
-            }
-        }
     }
 }

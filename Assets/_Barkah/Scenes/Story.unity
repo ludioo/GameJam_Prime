@@ -543,7 +543,7 @@ MonoBehaviour:
     happen. "
   - "You called these three persons to have a \u201Clittle talk\u201D"
   textComponent: {fileID: 2071557898}
-  canvasManager: {fileID: 0}
+  canvasManager: {fileID: 1965670674}
 --- !u!1 &387471522
 GameObject:
   m_ObjectHideFlags: 0
