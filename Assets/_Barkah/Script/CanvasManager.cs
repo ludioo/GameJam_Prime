@@ -21,4 +21,10 @@ public class CanvasManager : MonoBehaviour
         LeanTween.alphaCanvas(mainCanvas, 0, 1).setOnComplete(() =>
             SceneManager.LoadScene(nameScene));
     }
+
+    public void EndingScene()
+    {
+        LeanTween.alphaCanvas(mainCanvas, 0, 1).setDelay(1).setOnComplete(() =>
+            SceneManager.LoadScene("MainMenu"));
+    }
 }

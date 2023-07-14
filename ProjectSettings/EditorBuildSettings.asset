@@ -14,4 +14,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Barkah/Scenes/Gameplay.unity
     guid: 47e090e54adf4bf43ab60844b0cc6764
+  - enabled: 1
+    path: Assets/_Barkah/Scenes/GoodEnding.unity
+    guid: 45283c40a9c546f46ab58203d9e69e02
+  - enabled: 1
+    path: Assets/_Barkah/Scenes/BadEnding.unity
+    guid: a5f6986bba9453d4e9ee2d9bb1a4364f
+  - enabled: 1
+    path: Assets/_Barkah/Scenes/WorstEnding.unity
+    guid: 3c76fa1b5c9cc1641830087166d01c96
   m_configObjects: {}
