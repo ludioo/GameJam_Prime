@@ -9,15 +9,19 @@ public class QuestionCanvas : MonoBehaviour
     [SerializeField] private List<Button> questionButtonList;
     [SerializeField] private List<Question_SO> questionSequence;
 
+    private int index;
+
     private void Awake()
     {
         for (int i = 0; i < questionButtonList.Count; i++)
         {
-            int index = i;
+            int _index = i;
             questionButtonList[i].onClick.AddListener(() =>
             {
-                GameplayManager.Instance.SetString(questionSequence[index].name);
-                QuestionManager.Instance.RemoveQuestionsFromList(questionSequence, index);
+                GameplayManager.Instance.SetString(questionSequence[_index].name);
+                QuestionManager.Instance.RemoveQuestionsFromList(questionSequence, _index);
+
+                index = _index;
             });
         }
 
@@ -46,17 +50,20 @@ public class QuestionCanvas : MonoBehaviour
         }
         else if (questionSequence.Count < 3)
         {
-            if (QuestionManager.Instance.totalQuestionList.Count == 0)
-            {
-                QuestionManager.Instance.AddQuestionToList(questionSequence, QuestionManager.Instance.totalQuestionList[0]);
-            }
-            else
+            if (QuestionManager.Instance.totalQuestionList.Count != 0)
             {
                 QuestionManager.Instance.AddQuestionToList(questionSequence, QuestionManager.Instance.totalQuestionList[0]);
                 QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.totalQuestionList, 0);
-            }
 
-            questionButtonList[2].gameObject.GetComponentInChildren<TMP_Text>().text = questionSequence[2].questionText;
+                for (int i = 0; i < 3; i++)
+                {
+                    questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = questionSequence[i].questionText;
+                }
+            }
+            else
+            {
+                questionButtonList[index].gameObject.SetActive(false);
+            }
         }
 
         
