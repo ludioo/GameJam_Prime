@@ -59,9 +59,9 @@ public class QuestionCanvas : MonoBehaviour
             {
                 if (QuestionManager.Instance.totalQuestionList.Count > i)
                 {
-                    Question_SO Aquestion_SO = QuestionManager.Instance.totalQuestionList[i];
+                    Question_SO Aquestion_SO = QuestionManager.Instance.aTotalQuestionList[0];
                     QuestionManager.Instance.AddQuestionToList(aQuestionSequence, Aquestion_SO);
-                    QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.aTotalQuestionList, i);
+                    QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.aTotalQuestionList, 0);
 
                     questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = aQuestionSequence[i].questionText;
                 }
@@ -71,15 +71,15 @@ public class QuestionCanvas : MonoBehaviour
                 }
             }
         }
-        else if (bQuestionSequence.Count == 0)
+        if (bQuestionSequence.Count == 0)
         {
             for (int i = 0; i < 3; i++)
             {
                 if (QuestionManager.Instance.totalQuestionList.Count > i)
                 {
-                    Question_SO Bquestion_SO = QuestionManager.Instance.totalQuestionList[i];
+                    Question_SO Bquestion_SO = QuestionManager.Instance.bTotalQuestionList[0];
                     QuestionManager.Instance.AddQuestionToList(bQuestionSequence, Bquestion_SO);
-                    QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.bTotalQuestionList, i);
+                    QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.bTotalQuestionList, 0);
 
                     questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = bQuestionSequence[i].questionText;
                 }
@@ -89,15 +89,15 @@ public class QuestionCanvas : MonoBehaviour
                 }
             }
         }
-        else if(cQuestionSequence.Count == 0)
+        if(cQuestionSequence.Count == 0)
         {
             for (int i = 0; i < 3; i++)
             {
                 if (QuestionManager.Instance.totalQuestionList.Count > i)
                 {
-                    Question_SO Cquestion_SO = QuestionManager.Instance.totalQuestionList[i];
+                    Question_SO Cquestion_SO = QuestionManager.Instance.cTotalQuestionList[0];
                     QuestionManager.Instance.AddQuestionToList(cQuestionSequence, Cquestion_SO);
-                    QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.cTotalQuestionList, i);
+                    QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.cTotalQuestionList, 0);
 
                     questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = cQuestionSequence[i].questionText;
                 }
@@ -105,6 +105,40 @@ public class QuestionCanvas : MonoBehaviour
                 {
                     break;
                 }
+            }
+        }
+
+        if (aQuestionSequence.Count < 3 && aQuestionSequence.Count != 0)
+        {
+            Question_SO Aquestion_SO = QuestionManager.Instance.aTotalQuestionList[0];
+            QuestionManager.Instance.AddQuestionToList(aQuestionSequence, Aquestion_SO);
+            QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.aTotalQuestionList, 0);
+
+            for (int i = 0; i < 3; i++)
+            {
+                questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = aQuestionSequence[i].questionText;
+            }
+        }
+        else if (bQuestionSequence.Count < 3 && bQuestionSequence.Count != 0)
+        {
+            Question_SO Bquestion_SO = QuestionManager.Instance.bTotalQuestionList[0];
+            QuestionManager.Instance.AddQuestionToList(bQuestionSequence, Bquestion_SO);
+            QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.bTotalQuestionList, 0);
+
+            for (int i = 0; i < 3; i++)
+            {
+                questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = bQuestionSequence[i].questionText;
+            }
+        }
+        else if (cQuestionSequence.Count < 3 && cQuestionSequence.Count != 0)
+        {
+            Question_SO Cquestion_SO = QuestionManager.Instance.cTotalQuestionList[0];
+            QuestionManager.Instance.AddQuestionToList(cQuestionSequence, Cquestion_SO);
+            QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.cTotalQuestionList, 0);
+
+            for (int i = 0; i < 3; i++)
+            {
+                questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = cQuestionSequence[i].questionText;
             }
         }
 
