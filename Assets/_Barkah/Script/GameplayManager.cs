@@ -14,6 +14,10 @@ public class GameplayManager : MonoBehaviour
 
     public State NowState;
 
+    [Header("Flow")]
+    public GameObject flow;
+    public string stringFlow;
+
     [Header("NPC")]
     public List<GameObject> spawnNPC = new List<GameObject>();
     public List<GameObject> prefabsNPC = new List<GameObject>();
@@ -23,6 +27,7 @@ public class GameplayManager : MonoBehaviour
     public GameObject panelNotes;
     public GameObject photoPreview;
     public GameObject[] notesNPC;
+    public GameObject[] nameText;
 
     [Header("Buttons")]
     public GameObject[] allButtons;
@@ -53,6 +58,10 @@ public class GameplayManager : MonoBehaviour
         else
         {
             Instance = this;
+        }
+        foreach (GameObject item in nameText)
+        {
+            item.SetActive(false);
         }
         RandomPickAndSpawn();
     }
@@ -99,10 +108,34 @@ public class GameplayManager : MonoBehaviour
 
             // Add the instantiated NPC to the onGameplayNPC list
             onGameplayNPC.Add(instantiatedNPC);
+            foreach (GameObject item in nameText)
+            {
+                item.SetActive(true);
+                CanvasGroup cg = item.GetComponent<CanvasGroup>();
+                if (cg == null)
+                {
+                    cg = item.AddComponent<CanvasGroup>();
+                    cg.alpha = 0;
+                }
+                else
+                {
+                    cg.alpha = 0;
+                }
+                LeanTween.alphaCanvas(cg, 1, 0.5f);
+            }
         }
     }
 
+    public void SetString(string flowString)
+    {
+        stringFlow = flowString;
+        flow.SetActive(true);
+    }
 
+    public string GetStringFlow()
+    {
+        return stringFlow;
+    }
 
     public void ChooseNPC(int index)
     {
@@ -167,7 +200,11 @@ public class GameplayManager : MonoBehaviour
                 for (int i = 0; i < onGameplayNPC.Count; i++)
                 {
                     if (index != i)
+                    {
                         onGameplayNPC[i].GetComponent<Button>().interactable = false;
+                        nameText[i].SetActive(false);
+                    }
+                        
                 }
 
                 spotlights[index].SetActive(true);
@@ -187,6 +224,8 @@ public class GameplayManager : MonoBehaviour
                 foreach (GameObject item in allButtons)
                     item.SetActive(true);
 
+                foreach(GameObject item in nameText)
+                    item.SetActive(true);
                 NowState = State.Idle;
                 break;
         }
