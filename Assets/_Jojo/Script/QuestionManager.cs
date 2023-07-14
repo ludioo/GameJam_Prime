@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class QuestionManager : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class QuestionManager : MonoBehaviour
     }
 
     public void RemoveQuestionsFromList(List<Question_SO> questionList, int index)
+    {
+        questionList.RemoveAt(index);
+    }
+    public void _RemoveQuestionsFromList(List<Button> questionList, int index)
     {
         questionList.RemoveAt(index);
     }

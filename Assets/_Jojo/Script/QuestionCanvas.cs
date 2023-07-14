@@ -16,7 +16,7 @@ public class QuestionCanvas : MonoBehaviour
         for (int i = 0; i < questionButtonList.Count; i++)
         {
             int _index = i;
-            questionButtonList[i].onClick.AddListener(() =>
+            questionButtonList[_index].onClick.AddListener(() =>
             {
                 GameplayManager.Instance.SetString(questionSequence[_index].name);
                 QuestionManager.Instance.RemoveQuestionsFromList(questionSequence, _index);
@@ -30,6 +30,12 @@ public class QuestionCanvas : MonoBehaviour
 
     public IEnumerator InitializeQuestionCanvas()
     {
+        if (QuestionManager.Instance.totalQuestionList.Count == 0)
+        {
+            questionButtonList[index].gameObject.SetActive(false);
+            QuestionManager.Instance._RemoveQuestionsFromList(questionButtonList, index);
+        }
+
         if (questionSequence.Count == 0)
         {
             for (int i = 0; i < 3; i++)
@@ -59,10 +65,6 @@ public class QuestionCanvas : MonoBehaviour
                 {
                     questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = questionSequence[i].questionText;
                 }
-            }
-            else
-            {
-                questionButtonList[index].gameObject.SetActive(false);
             }
         }
 
