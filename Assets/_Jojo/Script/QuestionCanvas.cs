@@ -78,7 +78,7 @@ public class QuestionCanvas : MonoBehaviour
                 if (QuestionManager.Instance.totalQuestionList.Count > i)
                 {
                     Question_SO Bquestion_SO = QuestionManager.Instance.totalQuestionList[i];
-                    QuestionManager.Instance.AddQuestionToList(aQuestionSequence, Bquestion_SO);
+                    QuestionManager.Instance.AddQuestionToList(bQuestionSequence, Bquestion_SO);
                     QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.bTotalQuestionList, i);
 
                     questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = bQuestionSequence[i].questionText;
@@ -96,7 +96,7 @@ public class QuestionCanvas : MonoBehaviour
                 if (QuestionManager.Instance.totalQuestionList.Count > i)
                 {
                     Question_SO Cquestion_SO = QuestionManager.Instance.totalQuestionList[i];
-                    QuestionManager.Instance.AddQuestionToList(aQuestionSequence, Cquestion_SO);
+                    QuestionManager.Instance.AddQuestionToList(cQuestionSequence, Cquestion_SO);
                     QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.cTotalQuestionList, i);
 
                     questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = cQuestionSequence[i].questionText;
