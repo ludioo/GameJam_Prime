@@ -15,22 +15,15 @@ MonoBehaviour:
   personName: Person1
   personImage: {fileID: 21300000, guid: 109a7446c0abf4e43b3665c676600f4e, type: 3}
   personDescription: Contoh Deskripsi Person 1
-  questions:
-  - Oh yeah how is she? Haven't heard from her since my high school reunion
-  - Is she still having a hard time with her new boss?
-  - Whoa relax man, what the hell is your problem?
-  - Now it's no longer 2 options Science and Social studies. I also don't really
-    quite get it, her homeroom teacher also didn't understand fully so he referred
-    me to the school administration, but when I asked them they referred me back
-    to ask the homeroom teacher. Does anyone at the school even understand?
-  - She sort of gave up trying and it's all on me now to make sure she doesn't make
-    the wrong decision.
+  questions: []
   responses:
   - 7 o'clock, I need to take my sister to her school first so I always clock-in
     early
   - After clocking in I went back to my car to sleep until 8 o'clock
-  - I only stayed home helping my sister's school project, I was actually planning
-    on hanging out with my friends but had to cancel
-  - She's hanging in there I suppose, there are a lot of weird new rules regarding
-    her academics
+  - No
+  - I'm an intern on sales.
+  - well, i can't say much because i am in my car this whole morning
+  otherResponses:
+  - Well, i you can ask the office security guard to confirm it.
+  - Well, i told you before you can asked for the security guard testimony.
   haveMentalHealth: 0

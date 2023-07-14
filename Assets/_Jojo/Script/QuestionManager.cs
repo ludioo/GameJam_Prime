@@ -6,9 +6,7 @@ public class QuestionManager : MonoBehaviour
 {
     public static QuestionManager Instance { get; private set; }
 
-    public List<Question_SO> aQuestionList;
-    public List<Question_SO> bQuestionList;
-    public List<Question_SO> cQuestionList;
+    public List<Question_SO> totalQuestionList;
 
     private void Awake()
     {

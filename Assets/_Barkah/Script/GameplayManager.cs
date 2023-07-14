@@ -28,6 +28,7 @@ public class GameplayManager : MonoBehaviour
     public GameObject photoPreview;
     public GameObject[] notesNPC;
     public GameObject[] nameText;
+    public QuestionCanvas questionCanvas;
 
     [Header("Buttons")]
     public GameObject[] allButtons;
@@ -47,6 +48,8 @@ public class GameplayManager : MonoBehaviour
     public float totalScore;
     public int dialogueChosen = 0;
 
+    private bool isConvoing;
+
     private void Awake()
     {
         // If there is an instance, and it's not me, delete myself.
@@ -64,6 +67,8 @@ public class GameplayManager : MonoBehaviour
             item.SetActive(false);
         }
         RandomPickAndSpawn();
+
+        isConvoing = false;
     }
     public void RandomPickAndSpawn()
     {
@@ -192,6 +197,7 @@ public class GameplayManager : MonoBehaviour
         switch (NowState)
         {
             case State.Idle:
+                StartCoroutine(questionCanvas.InitializeQuestionCanvas());
                 animator_black.SetTrigger("On");
                 yield return new WaitForSeconds(animation_black.length);
                 foreach (GameObject item in allButtons)
@@ -210,23 +216,34 @@ public class GameplayManager : MonoBehaviour
                 spotlights[index].SetActive(true);
                 SFXManager.Instance.PlaySpotlight();
                 NowState = State.Convo;
+
+                isConvoing = true;
+
                 break;
 
             case State.Convo:
-                spotlights[index].SetActive(false);
-                SFXManager.Instance.PlaySpotlight();
-                animator_black.SetTrigger("Off");
-                yield return new WaitForSeconds(animation_black.length);
+                if (!isConvoing)
+                {
+                    spotlights[index].SetActive(false);
+                    SFXManager.Instance.PlaySpotlight();
+                    animator_black.SetTrigger("Off");
+                    yield return new WaitForSeconds(animation_black.length);
 
-                foreach (GameObject item in onGameplayNPC)
-                    item.GetComponent<Button>().interactable = true;
+                    foreach (GameObject item in onGameplayNPC)
+                        item.GetComponent<Button>().interactable = true;
 
-                foreach (GameObject item in allButtons)
-                    item.SetActive(true);
+                    questionCanvas.gameObject.SetActive(false);
 
-                foreach(GameObject item in nameText)
-                    item.SetActive(true);
-                NowState = State.Idle;
+                    foreach (GameObject item in allButtons)
+                        item.SetActive(true);
+
+                    foreach (GameObject item in nameText)
+                        item.SetActive(true);
+                    NowState = State.Idle;
+
+                    isConvoing = false;
+
+                }
                 break;
         }
     }
@@ -243,6 +260,34 @@ public class GameplayManager : MonoBehaviour
             item.SetActive(false);
         }
         notesNPC[index].SetActive(true);
+    }
+
+    public int GetSpotlightCount()
+    {
+        for (int i = 0; i < spotlights.Count; i++)
+        {
+            if (spotlights[i].activeInHierarchy)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public void IsConvoingTrue()
+    {
+        isConvoing = true;
+    }
+
+    public void IsConvoingFalse()
+    {
+        isConvoing = false;
+    }
+
+    public bool IsConvoing()
+    {
+        return isConvoing;
     }
 
     #region ScoreSystem

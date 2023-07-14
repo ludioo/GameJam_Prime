@@ -15,11 +15,16 @@ MonoBehaviour:
   personName: Person3
   personImage: {fileID: 21300000, guid: 49f6e0549ca29d34bbd056f918644d17, type: 3}
   personDescription: Contoh Deskripsi Person 3
+  questions: []
   responses:
-  - response: "Normal-normal aja kok\u2026"
-    isBluffing: 0
-  - response: Dibilang dari tadi oke- oke aja
-    isBluffing: 0
-  - response: "Jujur, daritadi pengen omongin\u2026"
-    isBluffing: 1
+  - I don't know, I came in after B
+  - I went to the smoking area for my morning coffee and cigarette
+  - I was in the smoking area before.
+  - I'm a junior marketing, its my second month.
+  - well how can i know! i'm not even here!
+  otherResponses:
+  - Got it outside, are you saying that I lied?
+  - What is your problem with me? i said it before i didn't enter the room before
+    8
+  - you always cornering me, its probably you are the one doing it!!!!
   haveMentalHealth: 0

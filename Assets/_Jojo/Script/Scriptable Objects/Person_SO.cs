@@ -21,5 +21,6 @@ public class Person_SO : ScriptableObject
     [Space]
     public List<string> questions;
     public List<string> responses;
+    public List<string> otherResponses;
     public bool haveMentalHealth;
 }

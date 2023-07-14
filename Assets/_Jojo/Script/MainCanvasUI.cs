@@ -2,52 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainCanvasUI : MonoBehaviour
 {
-    public enum PersonChosen
+    public List<GameObject> dialogueBox;
+
+    public void InitializeDialogueBox(string text)
     {
-        First,
-        Second,
-        Third
-    }
-
-    private PersonChosen personChosen;
-
-    [SerializeField] private Button hintPanelUI;
-    [SerializeField] private Button notePanelUI;
-
-    [Header("Choices of People")]
-    [SerializeField] private Button firstPersonButton;
-    [SerializeField] private Button secondPersonButton;
-    [SerializeField] private Button thirdPersonButton;
-
-    private void Awake()
-    {
-        notePanelUI.onClick.AddListener(() =>
+        foreach (GameObject box in dialogueBox)
         {
-            Initiator.Instance.InitiateInformationPrompt();
-            gameObject.SetActive(false);
-        });
-
-        firstPersonButton.onClick.AddListener(() =>
-        {
-            personChosen = PersonChosen.First;
-        });
-
-        secondPersonButton.onClick.AddListener(() =>
-        {
-            personChosen = PersonChosen.Second;
-        });
-
-        thirdPersonButton.onClick.AddListener(() =>
-        {
-            personChosen = PersonChosen.Third;
-        });
-    }
-
-    public PersonChosen GetChosenPerson()
-    {
-        return personChosen;
+            box.GetComponentInChildren<TMP_Text>().text = text;
+        }
     }
 }

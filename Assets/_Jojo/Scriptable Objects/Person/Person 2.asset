@@ -15,11 +15,18 @@ MonoBehaviour:
   personName: Person2
   personImage: {fileID: 21300000, guid: 10c65ad32eb68be449a0c8b3db971ded, type: 3}
   personDescription: Contoh Deskripsi Person 2
+  questions:
+  - I didn't see you in the cafeteria buying coffee, where did you get them?
+  - How can you proof that you are sleeping in your car?
+  - How can you proof that you are in the smoking area?
+  - But no one also here, you probably sneek in.
+  - why are you so emotional if you not doing it?
   responses:
-  - response: Aku ga ngerasa ada yang aneh dari tadi
-    isBluffing: 0
-  - response: Nggak ada yang salah kok. Cuman ya..gitu.
-    isBluffing: 1
-  - response: "Emang ada. Ada yang salah\u2026"
-    isBluffing: 0
+  - I think it was pretty late, around 8.15-ish
+  - I went to the cafeteria to buy breakfast since I was running late and haven't
+    ate breakfast
+  - How can i see someone here when i was in the cafetaria since morning?
+  - I am on the IT division, for 5 years (not match with the ID/note)
+  - C
+  otherResponses: []
   haveMentalHealth: 0

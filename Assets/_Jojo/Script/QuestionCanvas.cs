@@ -6,114 +6,64 @@ using UnityEngine.UI;
 
 public class QuestionCanvas : MonoBehaviour
 {
-    [SerializeField] private List<Button> questionList;
+    [SerializeField] private List<Button> questionButtonList;
     [SerializeField] private List<Question_SO> questionSequence;
-
-    [Space]
-    [SerializeField] private MainCanvasUI mainCanvasUI;
 
     private void Awake()
     {
-        switch (mainCanvasUI.GetChosenPerson())
+        for (int i = 0; i < questionButtonList.Count; i++)
         {
-            case MainCanvasUI.PersonChosen.First:
-                for (int i = 0; i < questionList.Count; i++)
-                {
-                    questionList[i].onClick.AddListener(() =>
-                    {
-                        QuestionManager.Instance.RemoveQuestionsFromList(questionSequence, i);
-                    });
-                }
-                break;
-
-            case MainCanvasUI.PersonChosen.Second:
-                for (int i = 0; i < questionList.Count; i++)
-                {
-                    questionList[i].onClick.AddListener(() =>
-                    {
-                        QuestionManager.Instance.RemoveQuestionsFromList(questionSequence, i);
-                    });
-                }
-                break;
-
-            case MainCanvasUI.PersonChosen.Third:
-                for (int i = 0; i < questionList.Count; i++)
-                {
-                    questionList[i].onClick.AddListener(() =>
-                    {
-                        QuestionManager.Instance.RemoveQuestionsFromList(questionSequence, i);
-                    });
-                }
-                break;
+            int index = i;
+            questionButtonList[i].onClick.AddListener(() =>
+            {
+                GameplayManager.Instance.SetString(questionSequence[index].name);
+                QuestionManager.Instance.RemoveQuestionsFromList(questionSequence, index);
+            });
         }
+
         gameObject.SetActive(false);
     }
 
-    public void InitializeQuestionCanvas()
+    public IEnumerator InitializeQuestionCanvas()
     {
-        gameObject.SetActive(true);
-        if (questionSequence == null)
+        if (questionSequence.Count == 0)
         {
-            switch (mainCanvasUI.GetChosenPerson())
+            for (int i = 0; i < 3; i++)
             {
-                case MainCanvasUI.PersonChosen.First:
-                    for (int i = 0; i < 3; i++)
-                    {
-                        QuestionManager.Instance.AddQuestionToList(questionSequence, QuestionManager.Instance.aQuestionList[i]);
-                        QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.aQuestionList, i);
-                    }
-                    break;
-
-                case MainCanvasUI.PersonChosen.Second:
-                    for (int i = 0; i < 3; i++)
-                    {
-                        QuestionManager.Instance.AddQuestionToList(questionSequence, QuestionManager.Instance.bQuestionList[i]);
-                        QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.bQuestionList, i);
-                    }
-                    break;
-
-                case MainCanvasUI.PersonChosen.Third:
-                    for(int i = 0; i < 3; i++)
-                    {
-                        QuestionManager.Instance.AddQuestionToList(questionSequence, QuestionManager.Instance.cQuestionList[i]);
-                        QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.cQuestionList, i);
-                    }
-                    break;
-            }
-        }
-        else
-        {
-            if (questionSequence.Count < 3)
-            {
-                // cek questionNumber terbesar di sequence
-                BubbleSort();
-
-                int largestIndexInList = questionSequence[questionSequence.Count - 1].questionNumber;
-
-                // misal di questionSequence ada question 1, 2, 3
-                // dan dipilih question 1
-                // maka akan add question 4 dari list question A di QuestionManager
-                // dan question tersebut akan dihapus dari list question A
-
-                switch (mainCanvasUI.GetChosenPerson())
+                if (QuestionManager.Instance.totalQuestionList.Count > i)
                 {
-                    case MainCanvasUI.PersonChosen.First:
-                        QuestionManager.Instance.AddQuestionToList(questionSequence, QuestionManager.Instance.aQuestionList[largestIndexInList + 1]);
-                        QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.aQuestionList, largestIndexInList + 1);
-                        break;
+                    Question_SO question_SO = QuestionManager.Instance.totalQuestionList[0];
+                    QuestionManager.Instance.AddQuestionToList(questionSequence, question_SO);
+                    QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.totalQuestionList, 0);
 
-                    case MainCanvasUI.PersonChosen.Second:
-                        QuestionManager.Instance.AddQuestionToList(questionSequence, QuestionManager.Instance.bQuestionList[largestIndexInList + 1]);
-                        QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.bQuestionList, largestIndexInList + 1);
-                        break;
-
-                    case MainCanvasUI.PersonChosen.Third:
-                        QuestionManager.Instance.AddQuestionToList(questionSequence, QuestionManager.Instance.cQuestionList[largestIndexInList + 1]);
-                        QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.cQuestionList, largestIndexInList + 1);
-                        break;
+                    questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = questionSequence[i].questionText;
+                }
+                else
+                {
+                    break;
                 }
             }
         }
+        else if (questionSequence.Count < 3)
+        {
+            if (QuestionManager.Instance.totalQuestionList.Count == 0)
+            {
+                QuestionManager.Instance.AddQuestionToList(questionSequence, QuestionManager.Instance.totalQuestionList[0]);
+            }
+            else
+            {
+                QuestionManager.Instance.AddQuestionToList(questionSequence, QuestionManager.Instance.totalQuestionList[0]);
+                QuestionManager.Instance.RemoveQuestionsFromList(QuestionManager.Instance.totalQuestionList, 0);
+            }
+
+            questionButtonList[2].gameObject.GetComponentInChildren<TMP_Text>().text = questionSequence[2].questionText;
+        }
+
+        
+
+        yield return new WaitForSeconds(1f);
+
+        gameObject.SetActive(true);
     }
 
     public void BubbleSort()
