@@ -59,7 +59,6 @@ public class QuestionCanvas : MonoBehaviour
             case MainCanvasUI.PersonChosen.First:
                 if (QuestionManager.Instance.aTotalQuestionList.Count == 0)
                 {
-                    QuestionManager.Instance._RemoveQuestionsFromList(questionButtonList, index);
                     questionButtonList[index].gameObject.SetActive(false);
 
                     for (int i = 0; i < QuestionManager.Instance.aTotalQuestionList.Count; i++)
@@ -71,7 +70,6 @@ public class QuestionCanvas : MonoBehaviour
             case MainCanvasUI.PersonChosen.Second:
                 if (QuestionManager.Instance.bTotalQuestionList.Count == 0)
                 {
-                    QuestionManager.Instance._RemoveQuestionsFromList(questionButtonList, index);
                     questionButtonList[index].gameObject.SetActive(false);
 
                     for (int i = 0; i < QuestionManager.Instance.bTotalQuestionList.Count; i++)
@@ -83,7 +81,6 @@ public class QuestionCanvas : MonoBehaviour
             case MainCanvasUI.PersonChosen.Third:
                 if (QuestionManager.Instance.cTotalQuestionList.Count == 0)
                 {
-                    QuestionManager.Instance._RemoveQuestionsFromList(questionButtonList, index);
                     questionButtonList[index].gameObject.SetActive(false);
 
                     for (int i = 0; i < QuestionManager.Instance.cTotalQuestionList.Count; i++)
@@ -182,11 +179,6 @@ public class QuestionCanvas : MonoBehaviour
                 questionButtonList[i].gameObject.GetComponentInChildren<TMP_Text>().text = cQuestionSequence[i].questionText;
             }
         }
-
-        
-        
-
-        
 
         yield return new WaitForSeconds(1f);
 

@@ -30,11 +30,15 @@ public class GameplayManager : MonoBehaviour
     public GameObject[] notesNPC;
     public GameObject[] nameText;
     public QuestionCanvas questionCanvas;
+    public Temp_QuestionCanvas tempQuestionCanvas;
 
     [Header("Buttons")]
     public GameObject[] allButtons;
 
     [Header("Animator")]
+    public Animator aNoQuestionAnimator;
+    public Animator bNoQuestionAnimator;
+    public Animator cNoQuestionAnimator;
     public Animator animator_photoPreview;
     public AnimationClip animation_photoPreview;
     public Animator animator_black;
@@ -223,7 +227,25 @@ public class GameplayManager : MonoBehaviour
         switch (NowState)
         {
             case State.Idle:
-                StartCoroutine(questionCanvas.InitializeQuestionCanvas());
+                //StartCoroutine(questionCanvas.InitializeQuestionCanvas());
+                StartCoroutine(tempQuestionCanvas.InitializeQuestionCanvas(index));
+
+                if(tempQuestionCanvas.aAvailableQuestionList.Count == 0)
+                {
+                    aNoQuestionAnimator.SetTrigger("Trigger");
+                    break;
+                }
+                else if(tempQuestionCanvas.bAvailableQuestionList.Count == 0)
+                {
+                    bNoQuestionAnimator.SetTrigger("Trigger");
+                    break;
+                }
+                else if(tempQuestionCanvas.cAvailableQuestionList.Count == 0)
+                {
+                    cNoQuestionAnimator.SetTrigger("Trigger");
+                    break;
+                }
+
                 animator_black.SetTrigger("On");
                 yield return new WaitForSeconds(animation_black.length);
                 foreach (GameObject item in allButtons)
@@ -258,7 +280,23 @@ public class GameplayManager : MonoBehaviour
                     foreach (GameObject item in onGameplayNPC)
                         item.GetComponent<Button>().interactable = true;
 
-                    questionCanvas.gameObject.SetActive(false);
+                    //questionCanvas.gameObject.SetActive(false);
+                    tempQuestionCanvas.gameObject.SetActive(false);
+                    
+                    foreach (Button button in tempQuestionCanvas.aQuestionButtonList)
+                    {
+                        button.gameObject.SetActive(false);
+                    }
+                    
+                    foreach (Button button in tempQuestionCanvas.bQuestionButtonList)
+                    {
+                        button.gameObject.SetActive(false);
+                    }
+                    
+                    foreach (Button button in tempQuestionCanvas.cQuestionButtonList)
+                    {
+                        button.gameObject.SetActive(false);
+                    }
 
                     foreach (GameObject item in allButtons)
                         item.SetActive(true);
